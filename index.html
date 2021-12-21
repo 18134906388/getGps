@@ -7,6 +7,13 @@
     <title>Document</title>
     <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script>
   </head>
+  <style>
+    .btn {
+      width: 40%;
+      height: 100px;
+      margin-left: 20px;
+    }
+  </style>
   <body>
     <input
       type="button"
@@ -14,6 +21,13 @@
       class="btn btn-primary"
       value="下载"
       onclick="downLoadFeatures()"
+    />
+    <input
+      type="button"
+      id="btn3"
+      class="btn btn-primary"
+      value="记录"
+      onclick="getLocation()"
     />
     <div id="log"></div>
   </body>
@@ -47,11 +61,11 @@
     function showPosition(position) {
       lat = position.coords.latitude; //纬度
       lag = position.coords.longitude; //经度
-      logShow("纬度:" + lat + ",经度:" + lag);
-      gpsList.push([lag, lat]);
+      logShow("纬度:" + lat + ",经度:" + lag + ",时间:" + +new Date());
+      gpsList.push([lag, lat, +new Date()]);
     }
     function logShow(log) {
-      document.getElementById('log').innerText += log + "\n";
+      document.getElementById("log").innerText += log + "\n";
     }
     function downLoadFeatures() {
       var content = JSON.stringify(gpsList);
@@ -59,8 +73,10 @@
       saveAs(blob, "save.json");
     }
     getLocation();
-    setInterval(() => {
-      getLocation();
-    }, 1000);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        getLocation();
+      }
+    });
   </script>
 </html>
