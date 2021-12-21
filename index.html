@@ -10,22 +10,29 @@
   <style>
     .btn {
       width: 40%;
-      height: 100px;
-      margin-left: 20px;
+      height: 30px;
+      position: fixed;
+      bottom: 20px;
+    }
+    .btn-primary1{
+        left: 20px;
+    }
+    .btn-primary2{
+        right: 20px;
     }
   </style>
   <body>
     <input
       type="button"
       id="btn3"
-      class="btn btn-primary"
+      class="btn btn-primary1"
       value="下载"
       onclick="downLoadFeatures()"
     />
     <input
       type="button"
       id="btn3"
-      class="btn btn-primary"
+      class="btn btn-primary2"
       value="记录"
       onclick="getLocation()"
     />
@@ -61,7 +68,7 @@
     function showPosition(position) {
       lat = position.coords.latitude; //纬度
       lag = position.coords.longitude; //经度
-      logShow("纬度:" + lat + ",经度:" + lag + ",时间:" + +new Date());
+      logShow("纬度:" + lat + ",经度:" + lag + ",时间:" + new Date().toString());
       gpsList.push([lag, lat, +new Date()]);
     }
     function logShow(log) {
