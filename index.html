@@ -15,6 +15,7 @@
       value="下载"
       onclick="downLoadFeatures()"
     />
+    <div id="log"></div>
   </body>
   <script>
     let gpsList = [];
@@ -50,7 +51,7 @@
       gpsList.push([lag, lat]);
     }
     function logShow(log) {
-      document.body.innerText += log + "\n";
+      document.body.getElementId('log').innerText += log + "\n";
     }
     function downLoadFeatures() {
       var content = JSON.stringify(gpsList);
