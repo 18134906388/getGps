@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script>
+  </head>
+  <body>
+    <input
+      type="button"
+      id="btn3"
+      class="btn btn-primary"
+      value="下载"
+      onclick="downLoadFeatures()"
+    />
+  </body>
+  <script>
+    let gpsList = [];
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        logShow("浏览器不支持地理定位。");
+      }
+    }
+
+    function showError(error) {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          logShow("定位失败,用户拒绝请求地理定位");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          logShow("定位失败,位置信息是不可用");
+          break;
+        case error.TIMEOUT:
+          logShow("定位失败,请求获取用户位置超时");
+          break;
+        case error.UNKNOWN_ERROR:
+          logShow("定位失败,定位系统失效");
+          break;
+      }
+    }
+
+    function showPosition(position) {
+      lat = position.coords.latitude; //纬度
+      lag = position.coords.longitude; //经度
+      logShow("纬度:" + lat + ",经度:" + lag);
+      gpsList.push([lag, lat]);
+    }
+    function logShow(log) {
+      document.body.innerText += log + "\n";
+    }
+    function downLoadFeatures() {
+      var content = JSON.stringify(gpsList);
+      var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      saveAs(blob, "save.json");
+    }
+    getLocation();
+    setInterval(() => {
+      getLocation();
+    }, 1000 * 60 * 10);
+  </script>
+</html>
