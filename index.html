@@ -51,7 +51,7 @@
       gpsList.push([lag, lat]);
     }
     function logShow(log) {
-      document.body.getElementId('log').innerText += log + "\n";
+      document.getElementById('log').innerText += log + "\n";
     }
     function downLoadFeatures() {
       var content = JSON.stringify(gpsList);
